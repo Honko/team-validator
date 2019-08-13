@@ -5,7 +5,7 @@ window.onload = function() {
     document.getElementById('bans').value = atob(window.location.search.substring(3));
 
     document.getElementById('permalink').onclick = function(e) {
-        const url = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname;
+        const url = window.location.protocol + "//" + window.location.host + window.location.pathname;
         const query = btoa(document.getElementById('bans').value);
         prompt("Copy this link", url + "?q=" + query);
     };
