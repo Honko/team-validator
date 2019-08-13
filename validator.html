@@ -1,0 +1,56 @@
+<html>
+<head>
+<script language="javascript">
+window.onload = function() {
+    document.getElementById('bans').value = atob(window.location.search.substring(3));
+
+    document.getElementById('permalink').onclick = function(e) {
+        const url = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname;
+        const query = btoa(document.getElementById('bans').value);
+        prompt("Copy this link", url + "?q=" + query);
+    };
+
+    document.getElementById('validate').onclick = function(e) {
+        const bans = document.getElementById('bans').value.trim();
+        const team = document.getElementById('team').value.trim();
+        if (bans.length === 0 || team.length === 0) {
+            alert('Validate what?');
+            return;
+        }
+
+        const violations = bans.split(',').map(ban => ban.trim()).filter(ban => ban.length > 0 && team.includes(ban));
+        if (violations.length === 0) {
+            alert('Your team is legal.');
+        } else {
+            alert('Your team is not legal. Banned: ' + violations.join());
+        }
+    };
+};
+</script>
+</head>
+<body>
+<div>
+    <div>
+        <label for="bans">List of banned Pokemon, Items, Abilities, and Moves</label>
+    </div>
+    <div>
+        <textarea id="bans" rows="10" cols="80" placeholder="Arceus, Mewtwo, Choice Scarf, Intimidate, Scald"></textarea>
+    </div>
+    <div>
+        <button id="permalink">Generate Permalink</button>
+    </div>
+</div>
+<br />
+<div>
+    <div>
+        <label for="team">Team</label>
+    </div>
+    <div>
+        <textarea id="team" rows="20" cols="80" placeholder="Paste your exported team here"></textarea>
+    </div>
+    <div>
+        <button id="validate">Validate</button>
+    </div>
+</div>
+</body>
+</html>
